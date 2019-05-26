@@ -1,0 +1,86 @@
+table {
+  border-collapse: collapse;
+  width: 80%;
+  align:center;
+  margin-left:10%;
+  margin-right:10%;
+  font-family: Helvetica;
+  text-decoration: none;
+}
+
+th, td {
+  font-family: Helvetica;
+  padding: 30px;
+  text-align: left;
+}
+
+body {
+  background-color: white;
+  font-family: Helvetica;
+  text-decoration: none;
+}
+
+h1 {
+  color: black;
+  font-family: Helvetica;
+}
+p {
+  color: black;
+  font-family: Times;
+  font-size: 30;
+  text-decoration: none;
+}
+
+input[type=submit]{
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 450px;
+  align: center;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+a{
+	decoration:none;
+	text-decoration: none;
+}
+input[type=submit]:hover {
+opacity: 1
+}
+
+input[type=submitsmall]{
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 100px;
+  align: center;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+input[type=submitsmall]:hover {
+opacity: 1
+}
+
+button[type=submitsmall]{
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 100px;
+  align: center;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+button[type=submitsmall]:hover {
+opacity: 1
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

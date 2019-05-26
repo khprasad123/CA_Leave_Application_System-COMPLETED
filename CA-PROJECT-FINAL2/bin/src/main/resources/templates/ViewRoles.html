@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>View Employees</title>
+    <th:block th:include="layout/Header"></th:block>
+    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+<div class="container">
+ <h2>All Roles</h2><h2 align="right"> <a th:href="${'/admin/role/add'}" class="btn btn-danger">ADD NEW ROLE</a></h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Role Id</th>
+                <th>Name</th>
+            </tr>
+            <tr><td th:if="${#lists.isEmpty(hollydays)}">List is Empty</td></tr>
+            <tr th:each="hollyday : ${hollydays}">
+                <td th:text="${hollyday.getRoleId()}">Id</td>
+                <td th:text="${hollyday.getRoleName()}">Name</td>
+                <td><a th:href="${'/admin/role/edit/' + hollyday.getRoleId()}" class="submit">Edit</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

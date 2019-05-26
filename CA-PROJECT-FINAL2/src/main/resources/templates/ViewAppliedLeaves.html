@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Applied Leaves</title>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+<table>
+	<tr>
+		<th>Leave Start Date</th>
+		<th>Leave End Date</th>
+		<th>Category</th>
+		<th>Additional Reasons</th>
+		<th>Work Dissemination</th>
+		<th>Status</th>
+	</tr>
+	 <tr><td th:if="${#lists.isEmpty(leaveHistoryList)}">List is Empty</td></tr>
+	<tr th:each="leaveHistoryList : ${leaveHistoryList}">
+  		<td th:text="${leaveHistoryList.startDate}"></td>
+  		<td th:text="${leaveHistoryList.endDate}"></td>
+  		<td th:utext="${leaveHistoryList.leaveType.type}"></td>
+  		<td th:text="${leaveHistoryList.applyingReason}"></td>
+  		<td th:text="${leaveHistoryList.workDesemination}"></td>
+  		<td th:text="${leaveHistoryList.status}"></td>
+  		<td><a th:href="${'/staff/cancelLeaveForm/'+ leaveHistoryList.leaveHistoryId}"><input type="submit" class="submit" value="Cancel" /></td>
+  	</tr>
+	
+	</table>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<style type="text/css">
+#submit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 100px;
+  align: center;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+#submit:hover {
+opacity: 1
+}
+</style>
+
+
+ <title>Please Login</title>
+    <th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+  </head>
+    <div th:fragment="content">
+    <center>
+        <form name="f" th:action="@{/login}" method="post">               
+				<br><br>
+                <legend><h1>Please Login</h1></legend>
+                <br>
+                <div th:if="${param.error}" class="alert alert-error">    
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success"> 
+                    You have been logged out.
+                </div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"/>        
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"/>    
+                <div class="form-actions">
+                <br><br>
+                <button type="submit" class="submit" id="submit">Log in</button>
+                </div>
+        </form>
+    </center>
+    </div>
+  </body>
+</html>
+
+
+

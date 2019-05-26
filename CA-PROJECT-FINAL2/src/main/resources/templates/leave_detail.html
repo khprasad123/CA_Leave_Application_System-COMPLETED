@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<head>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+<div class="container">
+		<h2>Approval Form</h2>
+			<form th:object="${updateleave}" method="post">
+
+			<tr th:each="leave : ${leave_detail}">
+		
+            <td style="width: 10px;">Name : </td>
+			<td style="width: 100px;" th:text="${leave.Employee.fullName}" >name</td><br/><br/>
+			
+			
+            <td style="width: 150px;">LeaveHsitoryId : </td>
+			<td style="width: 100px;" th:text="${leave.leaveHistoryId}" name = 'leave_id' >leave_id</td><br/><br/>
+		
+		  	<td style="width: 150px;">Role : </td>
+			<td style="width: 100px;" th:text="${leave.employee.role.roleName}">Role</td><br/><br/>
+			
+
+			<td style="width: 200px;">Leave Type : </td>
+			<td style="width: 100px;" th:text="${leave.LeaveType.type}">Leave_Type</td><br/><br/>
+
+
+			<td style="width: 150px;">Start Date : </td>
+			<td style="width: 100px;" th:text="${leave.startDate}">Start_Date</td><br/><br/>
+
+
+			<td style="width: 120px">End Date : </td>
+			<td style="width: 100px;" th:text="${leave.endDate}">End_Date</td><br/><br/>
+
+
+			<td style="width: 120px">Applying Reason : </td>
+			<td style="width: 100px;" th:text="${leave.applyingReason}">Reason</td><br/><br/>
+			
+			
+            <td style="width: 150px;">Status  : </td>
+			<td style="width: 100px;" th:text="${leave.status}"></td><br/><br/>
+	
+			<td style="width: 150px;">Work Desemination : </td>
+			<td style="width: 100px;" th:text="${leave.workDesemination}">workDesemination</td><br/><br/>
+			
+			</tr>
+					
+					
+			</form>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Dashboard</title>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+<center>
+<br><br>
+<a th:href="${'/staff/leaveAppForm'}"><input type="submit" class="submit" value="Submit Leave Application" /></a><br>
+
+<a th:href="${'/staff/manageLeaveDetails'}"><input type="submit" class="submit" value="View/Edit Applied Leaves" /></a><br>
+
+<a th:href="${'/staff/viewApprovedLeaves'}"><input type="submit" class="submit" value="View Approved Leaves" /></a><br>
+
+<a th:href="${'/staff/viewPersonalLeaveHistory'}"><input type="submit" class="submit" value="View Personal Leave History" /></a>
+
+	
+</center>
+</body>
+</html>

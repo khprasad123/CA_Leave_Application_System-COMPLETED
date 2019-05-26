@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>View Employees</title>
+    <th:block th:include="layout/Header"></th:block>
+    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<h2>All Employees</h2><h2 align="right"> <a th:href="${'/admin/Employee/add'}"><input type="submit" class="submit" value="ADD NEW EMPLOYEE" /></a></h2>
+        
+<body>
+<div class="container">
+        <table class="table table-striped">
+            <tr>
+                
+                <th>Full Name</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Reports To</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr><td th:if="${#lists.isEmpty(employees)}">List is Empty</td></tr>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.getFullName()}">Name</td>
+                <td th:text="${employee.getUserName()}">UserName</td>
+                <td th:text="${employee.getEmail()}">Email</td>
+                <td th:text="${employee.getPassword()}">PassWord</td>
+                <td th:text="${employee.role.getRoleName()}">Role</td>
+                <td th:text="${employee.getReportsTo().getFullName()}">Manager</td>
+                <td><a th:href="${'/admin/Employee/edit/' + employee.empId}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
+                <td><a th:href="${'/admin/Employee/delete/' + employee.empId}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
+            </tr>
+        </table>
+        
+        
+    </div>
+</body>
+</html>

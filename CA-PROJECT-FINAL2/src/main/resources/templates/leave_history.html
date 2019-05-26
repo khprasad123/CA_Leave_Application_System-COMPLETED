@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>EmployeeList</title>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+<div class="container">
+<h2>Leave History</h2>
+ <form th:action="@{/leave/filter}" method="get" class="form-horizontal" >
+  <div th:if="${not #lists.isEmpty(leave_type_lists)}">
+	<div class="row">
+		
+			<div class="col-2">
+			StartDate: <input name="start_date" type="date" th:value="${startdate}"/></div>
+			<div class="col-2">
+			EndDate:  <input  name="end_date" type="date" th:value="${enddate}"/></div>
+		
+		<div class="col-3">
+			<select style="width:200px;height:30px;" id="leave_type" name="leave_type" > 
+		  	     <option th:value = "ALL" > ALL LeaveType</option>
+				<option th:each = "leaveType : ${leave_type_lists}"
+					 th:value = "${leaveType.type}"
+					 th:text = "${leaveType.type}"
+					 th:selected = "${leaveType.type == leave_type}"> 
+			 </select>
+		</div>
+		<div class="col-3">
+			<select style="width:200px;height:30px;" name="status"> 
+				<Option th:text = "ALL" th:selected>ALL Status</Option>
+				<Option th:each = "s : ${T(com.leave.project.UTILITIES.Status).values()}"
+					 th:value = "${s.get()}"
+					 th:text = "${s.get()}"
+					 th:selected = "${s.get() == status}"> 
+		 </select>
+		</div>
+		<div class="col-2">
+		        <button type="submit" class="submit"> Filter </button>        
+		</div>
+	</div>
+		
+		 
+	</div>
+
+	
+  <table id="employees" class="table table-striped table-bordered" style="padding-top:10px;">
+        <thead>
+        <tr>
+            <th style="width: 100px;">Name</th>
+            <th style="width: 100px;">StartDate</th>
+            <th style="width: 100px;">EndDate</th>
+            <th style="width: 100px;">LeaveType</th>
+            <th style="width: 100px;">Role</th>
+            <th style="width: 100px;">Status</th>
+            <th style="width: 100px;">Detail</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+          <tr th:each="leave : ${leave_list}">
+<!--           	  <td style="width: 50px;" th:text="${leave.leaveHistoryId}"/>
+ -->              <td style="width: 150px;" th:text="${leave.employee.fullName}"/>
+              <td style="width: 150px;" th:text="${leave.startDate}"/>
+              <td style="width: 150px;" th:text="${leave.endDate}"/>
+              <td style="width: 200px;" th:text="${leave.leaveType.type}"/>
+              <td style="width: 120px;" th:text="${leave.employee.role.roleName}"/>
+              <td style="width: 120px;" th:text="${leave.status}"/>
+ 			  <td ><a th:href="${'leave_detail/'+leave.leaveHistoryId}">Detail</a></td> 
+          </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+ <h2><a th:href="@{/leave/export}"><input type="submitsmall" class="submitsmall" value="Export" /></a></h2>
+
+</form>
+
+
+  
+    
+</body>
+</html>

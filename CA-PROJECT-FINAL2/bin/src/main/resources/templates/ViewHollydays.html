@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>View Hollydays</title>
+    <th:block th:include="layout/Header"></th:block>
+    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+<h2>All Hollydays</h2>
+ <h2 align="right"> <a th:href="${'/admin/Hollyday/add'}"><input type="submit" class="submit" value="ADD NEW HOLLDAY" /></h2>
+<div class="container">
+ 
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+            <tr><td th:if="${#lists.isEmpty(hollydays)}">List is Empty</td></tr>
+            <tr th:each="hollyday : ${hollydays}">
+                <td th:text="${hollyday.getHollydayName()}">Name</td>
+                <td th:text="${hollyday.getStartDate()}">Date</td>
+                <td th:text="${hollyday.getDescription()}">Description</td>
+                <td><a th:href="${'/admin/Hollyday/edit/' + hollyday.getHollydayId()}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
+                <td><a th:href="${'/admin/Hollyday/delete/' + hollyday.getHollydayId()}}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+

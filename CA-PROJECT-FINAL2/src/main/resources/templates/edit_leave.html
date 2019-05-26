@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<head>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+		<h2>Approval Form</h2>
+			<form th:object="${updateleave}" action="leave/update_leave" th:action="@{/leave/update_leave}" method="get">
+
+			<tr th:each="leave : ${updateleave}">
+		
+            <td style="width: 10px;">Name : </td>
+			<td style="width: 100px;" th:text="${leave.Employee.fullName}" >name</td><br/><br/>
+			
+			
+            <td style="width: 150px;">LeaveId : </td>
+			<td style="width: 100px;" th:text="${leave.leaveHistoryId}" name = "leave_id">leave_id</td><br/><br/>
+		
+
+			<td style="width: 200px;">Leave Type : </td>
+			<td style="width: 100px;" th:text="${leave.LeaveType.type}">Leave_Type</td><br/><br/>
+
+
+			<td style="width: 150px;">Start Date : </td>
+			<td style="width: 100px;" th:text="${leave.startDate}">Start_Date</td><br/><br/>
+
+
+			<td style="width: 120px">End Date : </td>
+			<td style="width: 100px;" th:text="${leave.endDate}">End_Date</td><br/><br/>
+
+
+			<td style="width: 120px">Applying Reason : </td>
+			<td style="width: 100px;" th:text="${leave.applyingReason}">Reason</td><br/><br/>
+			
+			
+            <td style="width: 150px;">Work Desemination : </td>
+			<td style="width: 100px;" th:text="${leave.workDesemination}">workDesemination</td><br/><br/>
+		 	<td><input type="hidden" th:field = "*{leaveHistoryId}"/></td> 
+			
+			</tr>
+			
+					<div>
+					<label>Rejection Reason:</label>
+					<input type='text' name='reasons' />
+					
+					</div>
+					<div>
+						<button type="submit" class="submit" id="approved" name = "action" value="1">Approved</button>
+						<button type="submit" class="submit" id="reject" name = "action" value="2">Reject</button>
+						<button type="submit" class="submit" id="cancle" name = "action" value="3">Cancel</button>
+						
+					</div>		
+					
+			</form>
+		</div>
+	</div>
+</body>
+</html>

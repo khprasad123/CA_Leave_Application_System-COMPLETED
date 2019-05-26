@@ -1,0 +1,25 @@
+<html xmlns:th="http://thymeLeaf.org">
+<title>Manager Dashboard</title>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+<body>
+<h1>Manager Dashboard</h1>
+<hr></hr>
+<br>
+<center>
+<br><br>
+<a th:href="${'/staff/leaveAppForm'}"><input type="submit" class="submit" value="Submit Leave Application" /></a>
+<a th:href="${'/staff/manageLeaveDetails'}"><input type="submit" class="submit" value="View/Edit Applied Leaves" /></a>
+<a th:href="${'/staff/viewApprovedLeaves'}"><input type="submit" class="submit" value="View Approved Leaves" /></a>
+<a th:href="${'/staff/viewPersonalLeaveHistory'}"><input type="submit" class="submit" value="View Personal Leave History" /></a>
+<p>Approve Employee Leave (View)</p>
+<a th:href="${'/leave/approval_list'}"><input type="submit" class="submit" value="View Applications for aproval" /></a>
+<a th:href="${'/leave/leave_history'}"><input type="submit" class="submit" value="View Employees Leave History" /></a>
+</center>
+</body>
+</html>
+
+
+
+

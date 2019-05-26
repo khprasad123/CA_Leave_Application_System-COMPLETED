@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+	<title>Employee Registration Form</title>
+	<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+	<form th:object="${role}" th:action="@{/admin/role}" method="post">
+	<table>
+		<tr>
+			<th>Role Name</th>
+			<td><input type="text" th:field="*{roleName}" required></input></td>
+		</tr>
+		<tr>
+			<td><input type="hidden" th:field="*{roleId}"></input></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="Submit"></td>
+		</tr>
+	</table>	
+	
+	</form>
+</body>
+</html>

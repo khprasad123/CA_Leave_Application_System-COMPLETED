@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+	<title>Employee Registration Form</title>
+	<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+	<form th:object="${leavetype}" th:action="@{/admin/LeaveType}" method="post">
+	<table>
+		<tr>
+			<th>Leave Type</th>
+			
+		</tr>
+		<tr>
+			<td><input type="text" th:field="*{type}" required></input></td>
+			<td><input type="hidden" th:field="*{leaveTypeId}"></input></td>
+		</tr>
+		<tr>
+				<td><input type="submit" class="submit" value="Submit"></td>
+		</tr>
+	</table>	
+	
+	</form>
+</body>
+</html>

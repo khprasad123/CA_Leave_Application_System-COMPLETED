@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title>Employee Registration Form</title>
+<th:block th:include="layout/Header"></th:block>
+	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
+	href="../../static/css/TableCss.css" />
+</head>
+<body>
+	<form th:object="${employee}" th:action="@{/admin/Employee}" method="post">
+		<table>
+			<tr>
+				<th></th>
+				<td><input type="hidden" th:field="*{empId}" required></input></td>
+			</tr>
+			<tr>
+				<th>FullName :</th>
+				<td><input type="text" th:field="*{fullName}" required></input></td>
+			</tr>
+			<tr>
+				<th>Email :</th>
+				<td><input type="email" th:field="*{email}" required></input></td>
+			</tr>
+			<tr>
+				<th>UserName :</th>
+				<td><input type="text" th:field="*{userName}" required></input></td>
+			</tr>
+			<tr>
+				<th>Password:</th>
+				<td><input type="password" th:field="*{password}" required></input></td>
+			</tr>
+			<tr>
+				<th>Role :</th>
+				<td><select th:field="${employee.role}" required>
+						<!-- <option value="default">Select Employee Type</option> -->
+						<option th:each="ROLE : ${EMPLOYEE_ROLES}"
+							th:value="${ROLE.roleId}" th:text="${ROLE.roleName}">Employee
+							Role</option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>Reports To :</th>
+				<td><select th:field="*{reportsTo}" required>
+						<!-- <!-- <option th:value="${null}">Select Manager</option> -->
+						<option th:each=" manager : ${MANAGERS}"
+							th:value="${manager.empId}" th:text="${manager.fullName}">Employee
+							Role</option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>Compensation Leave:</th>
+				<td><input type="number" th:field="*{compensationLeaveCount}" required min=0></input></td>
+			</tr>
+			<tr>
+				<th>Annual Leave</th>
+				<td><input type="number" th:field="*{annualLeaveCount}" required min=0></input></td>
+			</tr>
+			<tr>
+				<th>Medical Leave:</th>
+				<td><input type="number" th:field="*{medicalLeaveCount}" required  min=0></input></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class="submit" value="Submit"></td>
+			</tr>
+		</table>
+
+	</form>
+</body>
+</html>
