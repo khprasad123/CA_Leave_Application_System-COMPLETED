@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.leave.project.MODELS.Employee;
+import com.leave.project.MODELS.Role;
 import com.leave.project.REPOSITORIES.EmployeeRepo;
 import com.leave.project.REPOSITORIES.RoleRepo;
 import com.leave.project.SERVICES.IEmployeeService;
@@ -64,8 +65,10 @@ public class AdminEmployeeController {
 		
 		List<Employee> managers = empRepo.findAll();
 		managers = (List<Employee>)managers.stream().filter(emp -> emp.getRole().getRoleName().equalsIgnoreCase("manager")).collect(Collectors.toList());
-		model.addAttribute("MANAGERS", managers);
-		model.addAttribute("EMPLOYEE_ROLES",roleRepo.findAll());
+		model.addAttribute("MANAGERS", managers);		
+		List<Role> list=roleRepo.findAll();
+		list=(List<Role>)list.stream().filter(role->!role.getRoleName().equalsIgnoreCase("admin")).collect(Collectors.toList());
+		model.addAttribute("EMPLOYEE_ROLES",list);
 		model.addAttribute("employee", new Employee());
 		return "EmployeeAdd";
 	}
@@ -99,7 +102,9 @@ public class AdminEmployeeController {
 		List<Employee> managers = empRepo.findAll();
 		managers = (List<Employee>)managers.stream().filter(emp -> emp.getRole().getRoleName().equalsIgnoreCase("manager")).collect(Collectors.toList());
 		model.addAttribute("MANAGERS", managers);
-		model.addAttribute("EMPLOYEE_ROLES",roleRepo.findAll());
+		List<Role> list=roleRepo.findAll();
+		list=(List<Role>)list.stream().filter(role->!role.getRoleName().equalsIgnoreCase("admin")).collect(Collectors.toList());
+		model.addAttribute("EMPLOYEE_ROLES",list);
 		model.addAttribute("employee", empRepo.findById(id));
 		return "EmployeeAdd";
 	}
