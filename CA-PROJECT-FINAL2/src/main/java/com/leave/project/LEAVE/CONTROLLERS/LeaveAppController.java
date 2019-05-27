@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -362,14 +365,18 @@ public class LeaveAppController {
 	private JavaMailSender javaMailSender;
 
 	public void sendMail(String email, String status, String reasons) {
-		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo(email);
-		msg.setFrom("isslaps.hr@gmail.com");
+		  try {
+		        MimeMessage message = javaMailSender.createMimeMessage();
+		        MimeMessageHelper helper = new MimeMessageHelper(message);
+		        helper.setTo(email);
+		        helper.setFrom("isslaps.hr@gmail.com");
+		        helper.setSubject("LEAVE " + status);
+		        helper.setText("<html><head></head><body>" + reasons + "</body><br><a href ='http://localhost:8081/login'>Login</a>", true);
 
-		msg.setSubject("LEAVE " + status);
-		msg.setText(reasons);
-
-		javaMailSender.send(msg);
+		        javaMailSender.send(message);
+		    } catch (MessagingException e){
+		        throw new RuntimeException("Failed to create mail", e);
+		    }
 	}
 
 //		********* Export to Excel file *********
