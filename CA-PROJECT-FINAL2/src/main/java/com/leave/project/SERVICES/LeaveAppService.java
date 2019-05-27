@@ -48,7 +48,7 @@ public class LeaveAppService implements ILeaveService {
 		if (!isTwoDateValid(start, end)) {
 			return "End date cannot be less than Start Date.";
 		}
-		if (isAlreadyApply(startDate, endDate, employee)) {
+		if (isAlreadyApply(employee,leave)) {
 			return "You can't apply leave for already applied leave dates.";
 		}
 
@@ -84,16 +84,21 @@ public class LeaveAppService implements ILeaveService {
 			return true;
 		} else
 			return false;
-
 	}
 
 	@Transactional
-	private boolean isAlreadyApply(Date start, Date end, Employee employee) {
+	private boolean isAlreadyApply(Employee employee,LeaveHistoryDetails l) {
+		Date start = l.getStartDate();
+		Date end = l.getEndDate();
+		
 		List<LeaveHistoryDetails> list = leaveHistoryRepo.findByEmployee(employee);
-
+		
+		if(l.getStatus() == Status.UPDATED) {
+		 System.out.println(list.removeIf(leave -> leave.getLeaveHistoryId() == l.getLeaveHistoryId()));
+		}
 		list = list.stream()
 				.filter(leave -> (leave.getStatus() == Status.APPLIED || leave.getStatus() == Status.APPROVED
-								|| leave.getStatus() == Status.UPDATED) && leave.isBetween(start, end))
+						|| leave.getStatus() == Status.UPDATED) && leave.isBetween(start, end))
 				.collect(Collectors.toList());
 		return list.size() != 0;
 	}

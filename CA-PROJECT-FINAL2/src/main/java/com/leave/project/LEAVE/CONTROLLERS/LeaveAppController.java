@@ -210,7 +210,7 @@ public class LeaveAppController {
 
 		Iterator<Employee> i = empList.iterator();
 		while (i.hasNext()) {
-			temp = leaveHistoryDetailsRepo.findByEmployeeAndStatus(i.next(), Status.APPLIED);
+			temp = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(i.next(), Status.APPLIED,Status.UPDATED);
 			if (temp.size() != 0)
 				leaveList.addAll(temp);
 		}
@@ -284,13 +284,17 @@ public class LeaveAppController {
 		}		
 	}
 
-	@RequestMapping(path = "leave/edit_leave/{leave_history_id}", method = RequestMethod.GET)
-	public String updateleave(Model model, @PathVariable(value = "leave_history_id") String leave_history_id) {
+	@RequestMapping(path = "leave/edit_leave/{leave_history_id}/{reject}", method = RequestMethod.GET)
+	public String updateleave(Model model, @PathVariable(value = "leave_history_id") String leave_history_id, @PathVariable(value="reject") String reject) {
 		Employee t = emp.GetUser();
 		if (!t.getRole().getRoleName().equals("Manager"))
 			return "redirect:/logout";
 
 		LeaveHistoryDetails lhd = leaveHistoryDetailsRepo.findById(Integer.valueOf(leave_history_id)).orElse(null);
+		if(reject.equals("null")) {
+			reject="      ";
+			}
+		model.addAttribute("reason",reject);
 		model.addAttribute("updateleave", lhd);
 		return "edit_leave";
 	}
@@ -308,24 +312,36 @@ public class LeaveAppController {
 
 	@RequestMapping(path = "leave/update_leave", method = RequestMethod.GET)
 	public String saveleavestatus(@RequestParam("action") String action,
-			@RequestParam("leaveHistoryId") String leaveHistoryId, @RequestParam("reasons") String reasons) {
+			@RequestParam("leaveHistoryId") String leaveHistoryId, @RequestParam("reasons") String reasons,Model model) {
+		String a;
+		
 		Employee t = emp.GetUser();
 		if (!t.getRole().getRoleName().equals("Manager"))
 			return "redirect:/logout";
 
 		LeaveHistoryDetails ldh = leaveHistoryDetailsRepo.findById(Integer.valueOf(leaveHistoryId)).orElse(null);
-
+		String s= "redirect:/leave/edit_leave/{" + ldh.getLeaveHistoryId() + "}";
 		if (action.equals("2")) {
 			ldh.setStatus(Status.REJECTED);
-			ldh.setRejectionReason(reasons);
+			if(reasons == "") {
+				a = "Please Enter Rejection Reason";
+				System.out.println(a);
+				model.addAttribute("reason",a);
+			return "redirect:/leave/edit_leave/"+ldh.getLeaveHistoryId()+"/"+a;			
+			}
 			sendMail(ldh.getEmployee().getEmail(), Status.REJECTED.get(), intro + reasons);
-		} else if (action.equals("1")) {
+			ldh.setRejectionReason(reasons);
+			leaveHistoryDetailsRepo.save(ldh);
+			return "redirect:/leave/approval_list";
+		} 
+		else if (action.equals("1")) {
 			ldh.setStatus(Status.APPROVED);
 			updateLeaveCount(ldh.getEmployee(), ldh);
 			sendMail(ldh.getEmployee().getEmail(), Status.APPROVED.get(), "Ok.I accept.");
+			leaveHistoryDetailsRepo.save(ldh);
+			return "redirect:/leave/approval_list";
 		}
-		leaveHistoryDetailsRepo.save(ldh);
-		return "redirect:/leave/approval_list";
+		return null;
 	}
 
 	private void updateLeaveCount(Employee t, LeaveHistoryDetails ldh) {

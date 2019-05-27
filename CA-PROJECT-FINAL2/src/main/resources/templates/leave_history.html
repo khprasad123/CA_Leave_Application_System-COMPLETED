@@ -2,11 +2,14 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
 <meta charset="UTF-8">
 <title>EmployeeList</title>
 <th:block th:include="layout/Header"></th:block>
 	    <link rel="stylesheet" th:href="@{/css/TableCss.css}"
 	href="../../static/css/TableCss.css" />
+	
 </head>
 <body>
 <div class="container">
@@ -81,7 +84,24 @@
 
 </form>
 
-
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#employees').DataTable( {
+        columnDefs: [ {
+            targets: [ 0 ],
+            orderData: [ 0, 1 ]
+        }, {
+            targets: [ 1 ],
+            orderData: [ 1, 0 ]
+        }, {
+            targets: [ 4 ],
+            orderData: [ 4, 0 ]
+        } ]
+    } );
+} );
+</script>
   
     
 </body>
