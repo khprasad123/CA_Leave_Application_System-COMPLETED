@@ -8,19 +8,20 @@
 </head>
 <body>
 <div class="container">
- <h2>All Roles</h2><h2 align="right"> <a th:href="${'/admin/role/add'}" class="btn btn-danger">ADD NEW ROLE</a></h2>
+ <h2>All Leave Types</h2><h2 align="right"><a th:href="${'/admin/role/add'}"><input type="submit" class="submit" value="ADD NEW ROLE TYPE" /></a></h2>
         <table class="table table-striped">
             <tr>
-                <th>Role Id</th>
-                <th>Name</th>
+                <th>Leave Id</th>
+                <th>Type</th>
             </tr>
             <tr><td th:if="${#lists.isEmpty(hollydays)}">List is Empty</td></tr>
             <tr th:each="hollyday : ${hollydays}">
-                <td th:text="${hollyday.getRoleId()}">Id</td>
+                <td th:text="${hollyday.getRoleId()}">ID</td>
                 <td th:text="${hollyday.getRoleName()}">Name</td>
-                <td><a th:href="${'/admin/role/edit/' + hollyday.getRoleId()}" class="submit">Edit</a></td>
+          <!--       <td><a th:href="${'/admin/role/edit/' + hollyday.roleId}"><input type="submitsmall" class="submitsmall" value="Edit" /></td> -->
             </tr>
         </table>
     </div>
 </body>
 </html>
+

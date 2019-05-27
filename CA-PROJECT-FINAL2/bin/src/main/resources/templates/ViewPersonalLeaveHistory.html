@@ -17,6 +17,7 @@
 		<th>Work Dissemination</th>
 		<th>Status</th>
 	</tr>
+	<tr><td th:if="${#lists.isEmpty(leaveHistoryList)}">List is Empty</td></tr>
 	<tr th:each="leaveHistoryList : ${leaveHistoryList}">
   		<td th:text="${leaveHistoryList.startDate}"></td>
   		<td th:text="${leaveHistoryList.endDate}"></td>

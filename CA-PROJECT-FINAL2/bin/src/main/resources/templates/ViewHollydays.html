@@ -8,7 +8,7 @@
 </head>
 <body>
 <h2>All Hollydays</h2>
- <h2 align="right"> <a th:href="${'/admin/Hollyday/add'}"><input type="submit" class="submit" value="ADD NEW HOLLDAY" /></h2>
+ <h2 align="right"> <a th:href="${'/admin/Hollyday/add'}"><input type="submit" class="submit" value="ADD NEW HOLLDAY" /></a></h2>
 <div class="container">
  
         <table class="table table-striped">
@@ -22,8 +22,8 @@
                 <td th:text="${hollyday.getHollydayName()}">Name</td>
                 <td th:text="${hollyday.getStartDate()}">Date</td>
                 <td th:text="${hollyday.getDescription()}">Description</td>
-                <td><a th:href="${'/admin/Hollyday/edit/' + hollyday.getHollydayId()}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
-                <td><a th:href="${'/admin/Hollyday/delete/' + hollyday.getHollydayId()}}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
+                <td><a th:href="${'/admin/Hollyday/edit/' + hollyday.hollydayId}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
+                <td><a th:href="${'/admin/Hollyday/delete/' + hollyday.hollydayId}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
             </tr>
         </table>
     </div>

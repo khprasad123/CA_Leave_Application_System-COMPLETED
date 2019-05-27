@@ -5,6 +5,7 @@ table {
   margin-left:10%;
   margin-right:10%;
   font-family: Helvetica;
+  text-decoration: none;
 }
 
 th, td {
@@ -27,6 +28,7 @@ p {
   color: black;
   font-family: Times;
   font-size: 30;
+  text-decoration: none;
 }
 
 input[type=submit]{
@@ -62,6 +64,22 @@ input[type=submitsmall]{
   transition: 0.3s;
 }
 input[type=submitsmall]:hover {
+opacity: 1
+}
+
+button[type=submitsmall]{
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 100px;
+  align: center;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+button[type=submitsmall]:hover {
 opacity: 1
 }
 

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
- <h2>All Leave Types</h2><h2 align="right"><a th:href="${'/admin/LeaveType/add'}"><input type="submit" class="submit" value="ADD NEW LEAVE TYPE" /></h2>
+ <h2>All Leave Types</h2><h2 align="right"><a th:href="${'/admin/LeaveType/add'}"><input type="submit" class="submit" value="ADD NEW LEAVE TYPE" /></a></h2>
         <table class="table table-striped">
             <tr>
                 <th>Leave Id</th>
@@ -18,8 +18,8 @@
             <tr th:each="hollyday : ${leavetypes}">
                 <td th:text="${hollyday.getLeaveTypeId()}">ID</td>
                 <td th:text="${hollyday.getType()}">Type</td>
-                <td><a th:href="${'/admin/LeaveType/edit/' + hollyday.getLeaveTypeId()}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
-                <td><a th:href="${'/admin/LeaveType/delete/' + hollyday.getLeaveTypeId()}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
+                <td><a th:href="${'/admin/LeaveType/edit/' + hollyday.leaveTypeId}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
+                <td><a th:href="${'/admin/LeaveType/delete/' + hollyday.leaveTypeId}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
             </tr>
         </table>
     </div>
