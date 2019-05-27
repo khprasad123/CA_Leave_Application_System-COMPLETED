@@ -72,7 +72,7 @@ public class LeaveAppService implements ILeaveService {
 	}
 
 	private boolean isTwoDateValid(LocalDate start, LocalDate end) {
-		if (end.isAfter(start))
+		if (end.isAfter(start) || end.isEqual(start))
 			return true;
 		else
 			return false;
