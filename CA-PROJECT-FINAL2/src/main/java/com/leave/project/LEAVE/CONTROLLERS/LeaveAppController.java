@@ -171,11 +171,10 @@ public class LeaveAppController {
 			return "redirect:/logout";
 
 		LeaveHistoryDetails leavehistory = leaveHistoryDetailsRepo.findById(leaveHistoryId).orElse(null);
-		if (leavehistory.getStatus() == Status.APPROVED) {
-			int noOfDays = leaveService.noOfDays(leavehistory.getStartDate(), leavehistory.getEndDate());
-			Employee e = emp.updateLeaveCount(leavehistory.getEmployee(), leavehistory.getLeaveName(), noOfDays);// noOfDays value to negative3
-			employeeRepo.save(e);
-		}
+
+		int noOfDays = leaveService.noOfDays(leavehistory.getStartDate(), leavehistory.getEndDate());
+		Employee e = emp.updateLeaveCount(leavehistory.getEmployee(), leavehistory.getLeaveName(), noOfDays);// noOfDays value to negative3
+		employeeRepo.save(e);
 		leavehistory.setStatus(Status.CANCELLED);
 		leaveHistoryDetailsRepo.save(leavehistory);
 		List<LeaveHistoryDetails> leaveHistoryList = leaveHistoryDetailsRepo.findByStatus(Status.APPROVED);
