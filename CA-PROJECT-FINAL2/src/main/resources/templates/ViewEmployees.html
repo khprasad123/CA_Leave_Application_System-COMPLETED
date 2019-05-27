@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <head lang="en">
     <title>View Employees</title>
     <th:block th:include="layout/Header"></th:block>
@@ -10,7 +11,10 @@
         
 <body>
 <div class="container">
-        <table class="table table-striped">
+	<div class="row">
+        <table class="table table-striped table-bordered style=padding-top:10px;">
+                <thead>
+        
             <tr>
                 
                 <th>Full Name</th>
@@ -22,6 +26,8 @@
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
+            </thead>
+            <tbody>
             <tr><td th:if="${#lists.isEmpty(employees)}">List is Empty</td></tr>
             <tr th:each="employee : ${employees}">
                 <td th:text="${employee.getFullName()}">Name</td>
@@ -33,8 +39,9 @@
                 <td><a th:href="${'/admin/Employee/edit/' + employee.empId}"><input type="submitsmall" class="submitsmall" value="Edit" /></td>
                 <td><a th:href="${'/admin/Employee/delete/' + employee.empId}"><input type="submitsmall" class="submitsmall" value="Delete" /></td>
             </tr>
+            </tbody>
         </table>
-        
+        </div>
         
     </div>
 </body>

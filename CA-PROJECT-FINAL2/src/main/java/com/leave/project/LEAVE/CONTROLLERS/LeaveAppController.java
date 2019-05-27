@@ -42,8 +42,6 @@ public class LeaveAppController {
 	@Autowired
 	private IEmployeeService emp;
 
-	
-
 	@Autowired
 	private LeaveHistoryRepo leaveHistoryDetailsRepo;
 
@@ -57,10 +55,10 @@ public class LeaveAppController {
 	private ILeaveService leaveService;
 
 	private List<LeaveHistoryDetails> leaveList;
-	private List<LeaveType> leaveTypeList = Arrays.asList(new LeaveType(1,"Medical Leave"),new LeaveType(2,"Compensation Leave"),new LeaveType(3,"Annual Leave"));
+	private List<LeaveType> leaveTypeList = Arrays.asList(new LeaveType(1, "Medical Leave"),
+			new LeaveType(2, "Compensation Leave"), new LeaveType(3, "Annual Leave"));
 	private List<LeaveHistoryDetails> toExportList = new ArrayList<LeaveHistoryDetails>();
 	private String intro = "I'm sorry to inform that I can't accept your request. Because ";
-
 
 	@RequestMapping(path = "/staff/staffView", method = RequestMethod.GET)
 	public String staffView() {
@@ -75,8 +73,8 @@ public class LeaveAppController {
 		Employee t = emp.GetUser();
 		if (t.getRole().getRoleName().equals("Admin"))
 			return "redirect:/logout";
-		
-		LeaveHistoryDetails temp=new LeaveHistoryDetails();
+
+		LeaveHistoryDetails temp = new LeaveHistoryDetails();
 		temp.setEmployee(t);
 		model.addAttribute("leaveDetails", temp);
 		model.addAttribute("leaveTypeList", leaveTypeList);
@@ -84,19 +82,18 @@ public class LeaveAppController {
 	}
 
 	@RequestMapping(path = "/staff/leaveAppForm", method = RequestMethod.POST)
-	public String leaveAppSubmit(@Valid LeaveHistoryDetails leaveDetails, BindingResult result,
-			Model model) {
+	public String leaveAppSubmit(@Valid LeaveHistoryDetails leaveDetails, BindingResult result, Model model) {
 
 		Employee t = emp.GetUser();
 		leaveDetails.setEmployee(t);
 		if (t.getRole().getRoleName().equals("Admin"))
 			return "redirect:/logout";
 		System.out.println("**************");
-		System.out.println("StartDate "+leaveDetails.getStartDate().toString());
+		System.out.println("StartDate " + leaveDetails.getStartDate().toString());
 
-		String error_msg = leaveService.validateDate(leaveDetails,t);
+		String error_msg = leaveService.validateDate(leaveDetails, t);
 		if (!error_msg.equals("")) {
-			model.addAttribute("leaveDetails",leaveDetails);
+			model.addAttribute("leaveDetails", leaveDetails);
 			model.addAttribute("leaveTypeList", leaveTypeList);
 			model.addAttribute("message", error_msg);
 			model.addAttribute("error", "error");
@@ -104,11 +101,11 @@ public class LeaveAppController {
 			return "LeaveAppForm";
 		}
 		System.out.println("*******Filter*******");
-		System.out.println("StartDate "+leaveDetails.getStartDate().toString());
+		System.out.println("StartDate " + leaveDetails.getStartDate().toString());
 		leaveDetails.setEmployee(t);
 		leaveHistoryDetailsRepo.save(leaveDetails);
 		List<LeaveHistoryDetails> historyList = new ArrayList<LeaveHistoryDetails>();
-		historyList = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(t,Status.APPLIED, Status.UPDATED);
+		historyList = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(t, Status.APPLIED, Status.UPDATED);
 
 		model.addAttribute("leaveTypeList", leaveTypeList);
 		model.addAttribute("leaveDetails", leaveDetails);
@@ -122,7 +119,8 @@ public class LeaveAppController {
 		if (t.getRole().getRoleName().equals("Admin"))
 			return "redirect:/logout";
 
-		List<LeaveHistoryDetails> historyList = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(t,Status.APPLIED,Status.UPDATED);
+		List<LeaveHistoryDetails> historyList = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(t,
+				Status.APPLIED, Status.UPDATED);
 		model.addAttribute("leaveHistoryList", historyList);
 		return "ManageLeaveApp";
 	}
@@ -159,7 +157,8 @@ public class LeaveAppController {
 			return "redirect:/logout";
 
 		List<LeaveHistoryDetails> leaveHistoryList = leaveHistoryDetailsRepo.findByStatus(Status.APPROVED);
-		leaveHistoryList = (List<LeaveHistoryDetails>)leaveHistoryList.stream().filter(emp -> emp.getEmployee().getEmpId()==t.getEmpId()).collect(Collectors.toList());
+		leaveHistoryList = (List<LeaveHistoryDetails>) leaveHistoryList.stream()
+				.filter(emp -> emp.getEmployee().getEmpId() == t.getEmpId()).collect(Collectors.toList());
 		model.addAttribute("leaveHistoryList", leaveHistoryList);
 		return "ViewAppliedLeaves";
 	}
@@ -173,12 +172,16 @@ public class LeaveAppController {
 		LeaveHistoryDetails leavehistory = leaveHistoryDetailsRepo.findById(leaveHistoryId).orElse(null);
 
 		int noOfDays = leaveService.noOfDays(leavehistory.getStartDate(), leavehistory.getEndDate());
-		Employee e = emp.updateLeaveCount(leavehistory.getEmployee(), leavehistory.getLeaveName(), noOfDays);// noOfDays value to negative3
+		Employee e = emp.updateLeaveCount(leavehistory.getEmployee(), leavehistory.getLeaveName(), noOfDays);// noOfDays
+																												// value
+																												// to
+																												// negative3
 		employeeRepo.save(e);
 		leavehistory.setStatus(Status.CANCELLED);
 		leaveHistoryDetailsRepo.save(leavehistory);
 		List<LeaveHistoryDetails> leaveHistoryList = leaveHistoryDetailsRepo.findByStatus(Status.APPROVED);
-		leaveHistoryList = (List<LeaveHistoryDetails>)leaveHistoryList.stream().filter(emp -> emp.getEmployee().getEmpId()==t.getEmpId()).collect(Collectors.toList());
+		leaveHistoryList = (List<LeaveHistoryDetails>) leaveHistoryList.stream()
+				.filter(emp -> emp.getEmployee().getEmpId() == t.getEmpId()).collect(Collectors.toList());
 		model.addAttribute("leaveHistoryList", leaveHistoryList);
 		return "ViewAppliedLeaves";
 	}
@@ -209,7 +212,7 @@ public class LeaveAppController {
 
 		Iterator<Employee> i = empList.iterator();
 		while (i.hasNext()) {
-			temp = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(i.next(), Status.APPLIED,Status.UPDATED);
+			temp = leaveHistoryDetailsRepo.findByEmployeeAndStatusOrStatus(i.next(), Status.APPLIED, Status.UPDATED);
 			if (temp.size() != 0)
 				leaveList.addAll(temp);
 		}
@@ -255,20 +258,20 @@ public class LeaveAppController {
 		boolean dateFilter = start_date != "" && end_date != "";
 		if (leave_type.equals("ALL") && status.equals("ALL") && !dateFilter)
 			return "redirect:/leave/leave_history";
-		  
+
 		filter(dateFilter, start_date, end_date, leave_type, status);
-		
+
 		model.addAttribute("startdate", start_date);
 		model.addAttribute("enddate", end_date);
 		model.addAttribute("status", status);
 		model.addAttribute("leave_type", leave_type);
 		model.addAttribute("leave_list", toExportList);
-		model.addAttribute("leave_type_lists",leaveTypeList);
+		model.addAttribute("leave_type_lists", leaveTypeList);
 
 		return "leave_history";
 	}
 
-	private void filter( boolean dateFilter,String start_date, String end_date, String leave_type, String status) {
+	private void filter(boolean dateFilter, String start_date, String end_date, String leave_type, String status) {
 		toExportList.clear();
 		if (dateFilter) {
 			toExportList = leaveService.filterByDate(leaveList, start_date, end_date);
@@ -280,20 +283,21 @@ public class LeaveAppController {
 			toExportList = leaveService.filterByLeaveType(leaveList, leave_type);
 		} else if (leave_type.equals("ALL")) {
 			toExportList = leaveService.filterByStatus(leaveList, status);
-		}		
+		}
 	}
 
 	@RequestMapping(path = "leave/edit_leave/{leave_history_id}/{reject}", method = RequestMethod.GET)
-	public String updateleave(Model model, @PathVariable(value = "leave_history_id") String leave_history_id, @PathVariable(value="reject") String reject) {
+	public String updateleave(Model model, @PathVariable(value = "leave_history_id") String leave_history_id,
+			@PathVariable(value = "reject") String reject) {
 		Employee t = emp.GetUser();
 		if (!t.getRole().getRoleName().equals("Manager"))
 			return "redirect:/logout";
 
 		LeaveHistoryDetails lhd = leaveHistoryDetailsRepo.findById(Integer.valueOf(leave_history_id)).orElse(null);
-		if(reject.equals("null")) {
-			reject="      ";
-			}
-		model.addAttribute("reason",reject);
+		if (reject.equals("null")) {
+			reject = "      ";
+		}
+		model.addAttribute("reason", reject);
 		model.addAttribute("updateleave", lhd);
 		return "edit_leave";
 	}
@@ -311,29 +315,33 @@ public class LeaveAppController {
 
 	@RequestMapping(path = "leave/update_leave", method = RequestMethod.GET)
 	public String saveleavestatus(@RequestParam("action") String action,
-			@RequestParam("leaveHistoryId") String leaveHistoryId, @RequestParam("reasons") String reasons,Model model) {
+			@RequestParam("leaveHistoryId") String leaveHistoryId, @RequestParam("reasons") String reasons,
+			Model model) {
 		String a;
-		
+
 		Employee t = emp.GetUser();
 		if (!t.getRole().getRoleName().equals("Manager"))
 			return "redirect:/logout";
 
 		LeaveHistoryDetails ldh = leaveHistoryDetailsRepo.findById(Integer.valueOf(leaveHistoryId)).orElse(null);
-		String s= "redirect:/leave/edit_leave/{" + ldh.getLeaveHistoryId() + "}";
 		if (action.equals("2")) {
 			ldh.setStatus(Status.REJECTED);
-			if(reasons == "") {
+			if (reasons == "") {
 				a = "Please Enter Rejection Reason";
 				System.out.println(a);
-				model.addAttribute("reason",a);
-			return "redirect:/leave/edit_leave/"+ldh.getLeaveHistoryId()+"/"+a;			
+				model.addAttribute("reason", a);
+				return "redirect:/leave/edit_leave/" + ldh.getLeaveHistoryId() + "/" + a;
 			}
 			sendMail(ldh.getEmployee().getEmail(), Status.REJECTED.get(), intro + reasons);
 			ldh.setRejectionReason(reasons);
 			leaveHistoryDetailsRepo.save(ldh);
 			return "redirect:/leave/approval_list";
-		} 
-		else if (action.equals("1")) {
+		} else if (action.equals("1")) {
+			if (!leaveService.checkLeaveCount(ldh).equals("")) {
+				a = "Please reject. leave limit exceed.";
+				model.addAttribute("reason", a);
+				return "redirect:/leave/edit_leave/" + ldh.getLeaveHistoryId() + "/" + a;
+			}
 			ldh.setStatus(Status.APPROVED);
 			updateLeaveCount(ldh.getEmployee(), ldh);
 			sendMail(ldh.getEmployee().getEmail(), Status.APPROVED.get(), "Ok.I accept.");
